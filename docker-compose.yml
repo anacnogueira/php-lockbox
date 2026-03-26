@@ -1,7 +1,7 @@
 services:
   # Serviço do PHP
   app:
-    image: php:8.5-fpm-alpine
+    build: .
     container_name: lockbox
     volumes:
       - ./src:/var/www/html
