@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Core\Database;
 
 class Nota
@@ -118,5 +119,15 @@ class Nota
         }
 
         return str_repeat('*', 10);
+    }
+
+    public function dataCriacao()
+    {
+        return Carbon::parse($this->data_criacao);
+    }
+
+    public function dataAtualizacao()
+    {
+        return Carbon::parse($this->data_atualizacao);
     }
 }

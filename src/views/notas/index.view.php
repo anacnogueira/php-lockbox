@@ -4,7 +4,8 @@
         <a href="/notas?id=<?= $nota->id ?><?= request()->get('search', '', '&search=') ?>" class="
                 w-full p-2 cursor-pointer hover:bg-base-200 
                 <?php if (isset($nota->id) && $nota->id == $notaSelecionada->id) { ?> bg-base-200 <?php } ?>">
-            <?= $nota->titulo ?>
+            <?= $nota->titulo ?><br />        
+            <span class="text-xs">id: <?= $nota->id ?> ~ criado: <?= $nota->dataCriacao()->locale('pt_BR')->diffForHumans() ?></span>
         </a>
     <?php } ?>
 </div>

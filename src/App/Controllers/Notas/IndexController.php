@@ -19,6 +19,8 @@ class IndexController
             return view('notas/nao-encontrada');
         }
 
+        //dd($notaSelecionada->dataCriacao()->diffForHumans());
+
         return view('notas/index', compact('notas', 'notaSelecionada'));
     }
 
