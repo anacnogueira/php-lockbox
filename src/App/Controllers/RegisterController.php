@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Controllers;
 
 use Core\Database;
@@ -15,7 +17,7 @@ class RegisterController
     public function register()
     {
         $validacao = Validacao::validar([
-            'nome' => ['required'],
+            'nome'  => ['required'],
             'email' => ['required', 'email', 'confirmed', 'unique:usuarios'],
             'senha' => ['required', 'min:8', 'max:30', 'strong'],
 
@@ -30,7 +32,7 @@ class RegisterController
         $database->query(
             query: 'INSERT INTO usuarios (nome, email, senha) VALUES (:nome, :email, :senha)',
             params: [
-                'nome' => request()->post('nome'),
+                'nome'  => request()->post('nome'),
                 'email' => request()->post('email'),
                 'senha' => password_hash(request()->post('senha'), PASSWORD_DEFAULT),
             ]

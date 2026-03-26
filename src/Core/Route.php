@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Core;
 
 class Route
@@ -10,16 +12,16 @@ class Route
     {
         if (is_string($controller)) {
             $data = [
-                'class' => $controller,
-                'method' => '__invoke',
+                'class'      => $controller,
+                'method'     => '__invoke',
                 'middleware' => $middleware,
             ];
         }
 
         if (is_array($controller)) {
             $data = [
-                'class' => $controller[0],
-                'method' => $controller[1],
+                'class'      => $controller[0],
+                'method'     => $controller[1],
                 'middleware' => $middleware,
             ];
         }
@@ -67,16 +69,16 @@ class Route
 
         $routeInfo = $this->routes[$httpMethod][$uri];
 
-        $class = $routeInfo['class'];
-        $method = $routeInfo['method'];
+        $class      = $routeInfo['class'];
+        $method     = $routeInfo['method'];
         $middleware = $routeInfo['middleware'];
 
         if ($middleware) {
-            $m = new $middleware;
+            $m = new $middleware();
             $m->handle();
         }
 
-        $c = new $class;
+        $c = new $class();
         $c->$method();
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Models;
 
 use Core\Database;
@@ -21,12 +23,12 @@ class Nota
     public static function all($search = null)
     {
         $database = new Database(config('database'));
-        $query = 'SELECT * FROM notas WHERE usuario_id = :usuario_id';
-        $params = ['usuario_id' => auth()->id];
+        $query    = 'SELECT * FROM notas WHERE usuario_id = :usuario_id';
+        $params   = ['usuario_id' => auth()->id];
 
         if ($search) {
             $query .= ' AND titulo LIKE :search';
-            $params['search'] = '%'.$search.'%';
+            $params['search'] = '%' . $search . '%';
         }
 
         return $database->query(
@@ -38,7 +40,7 @@ class Nota
 
     public static function create($data = [])
     {
-        $database = new Database(config('database'));
+        $database    = new Database(config('database'));
         $data['now'] = date('Y-m-d H:i:s');
 
         $database->query(
@@ -56,10 +58,10 @@ class Nota
                 :data_atualizacao
             )',
             params: [
-                'usuario_id' => auth()->id,
-                'titulo' => $data['titulo'],
-                'nota' => trim(encrypt($data['nota'])),
-                'data_criacao' => $data['now'],
+                'usuario_id'       => auth()->id,
+                'titulo'           => $data['titulo'],
+                'nota'             => trim(encrypt($data['nota'])),
+                'data_criacao'     => $data['now'],
                 'data_atualizacao' => $data['now'],
             ]
         );
@@ -68,8 +70,8 @@ class Nota
     public static function update($id, $titulo, $nota)
     {
         $database = new Database(config('database'));
-        $now = date('Y-m-d H:i:s');
-        $params = [];
+        $now      = date('Y-m-d H:i:s');
+        $params   = [];
 
         $set = 'titulo = :titulo,               
                 data_atualizacao = :data_atualizacao';
@@ -84,10 +86,10 @@ class Nota
             WHERE id = :id AND usuario_id = :usuario_id";
 
         $params = array_merge($params, [
-            'id' => $id,
-            'titulo' => $titulo,
+            'id'               => $id,
+            'titulo'           => $titulo,
             'data_atualizacao' => $now,
-            'usuario_id' => auth()->id,
+            'usuario_id'       => auth()->id,
         ]);
 
         $database->query(
@@ -103,7 +105,7 @@ class Nota
         $database->query(
             query: 'DELETE FROM notas WHERE id = :id AND usuario_id = :usuario_id',
             params: [
-                'id' => $id,
+                'id'         => $id,
                 'usuario_id' => auth()->id,
             ]
         );

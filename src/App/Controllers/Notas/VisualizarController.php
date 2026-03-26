@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Controllers\Notas;
 
 use Core\Validacao;
@@ -20,6 +22,7 @@ class VisualizarController
 
         if ($validacao->naoPassou()) {
             return view('notas/confirm');
+
             exit();
         }
 
@@ -32,7 +35,6 @@ class VisualizarController
         session()->set('show', true);
 
         return redirect('/notas');
-
     }
 
     public function hide()
@@ -40,6 +42,5 @@ class VisualizarController
         session()->forget('show');
 
         return redirect('/notas');
-
     }
 }

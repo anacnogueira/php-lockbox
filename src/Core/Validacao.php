@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Core;
 
 class Validacao
@@ -8,7 +10,7 @@ class Validacao
 
     public static function validar($regras, $dados)
     {
-        $validacao = new self;
+        $validacao = new self();
 
         foreach ($regras as $campo => $regrasDoCampo) {
             foreach ($regrasDoCampo as $regra) {
@@ -17,14 +19,13 @@ class Validacao
                 if ($regra == 'confirmed') {
                     $validacao->$regra($campo, $valorDoCampo, $dados["{$campo}_confirmacao"]);
                 } elseif (str_contains($regra, ':')) {
-                    $temp = explode(':', $regra);
-                    $regra = $temp[0];
+                    $temp    = explode(':', $regra);
+                    $regra   = $temp[0];
                     $regraAr = $temp[1];
                     $validacao->$regra($regraAr, $campo, $valorDoCampo);
                 } else {
                     $validacao->$regra($campo, $valorDoCampo);
                 }
-
             }
         }
 
@@ -40,7 +41,6 @@ class Validacao
 
     private function email($campo, $valor)
     {
-
         if (! filter_var($valor, FILTER_VALIDATE_EMAIL)) {
             $this->addError($campo, "O $campo é inválido.");
         }
@@ -58,7 +58,7 @@ class Validacao
         $chave = 'validacoes';
 
         if ($nomeCustomizado) {
-            $chave .= '_'.$nomeCustomizado;
+            $chave .= '_' . $nomeCustomizado;
         }
 
         flash()->push($chave, $this->validacoes);

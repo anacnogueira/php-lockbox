@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 use App\Controllers\IndexController;
 use App\Controllers\LoginController;
 use App\Controllers\LogoutController;
@@ -9,7 +11,7 @@ use App\Middlewares\AuthMiddleware;
 use App\Middlewares\GuestMiddleware;
 use Core\Route;
 
-(new Route)
+(new Route())
 
     // Guest
     ->get('/', IndexController::class, GuestMiddleware::class)

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Controllers;
 
 use App\Models\Usuario;
@@ -35,7 +37,7 @@ class LoginController
 
         if ($usuario && password_verify(request()->post('senha'), $usuario->senha)) {
             session()->set('auth', $usuario);
-            flash()->push('mensagem', 'Seja bem-vindo '.$usuario->nome.'!');
+            flash()->push('mensagem', 'Seja bem-vindo ' . $usuario->nome . '!');
 
             return redirect('/notas');
         } else {
