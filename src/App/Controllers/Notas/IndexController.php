@@ -13,7 +13,7 @@ class IndexController
 
         $notaSelecionada = $this->getNotaSelecionada($notas);
 
-        if (!$notaSelecionada) {
+        if (! $notaSelecionada) {
             return view('notas/nao-encontrada');
         }
 
@@ -23,7 +23,8 @@ class IndexController
     private function getNotaSelecionada($notas)
     {
         $id = request()->get('id', (count($notas) > 0 ? $notas[0]->id : null));
-        $filtro = array_filter($notas, fn($n) => $n->id == $id);
-        return  array_pop($filtro);
+        $filtro = array_filter($notas, fn ($n) => $n->id == $id);
+
+        return array_pop($filtro);
     }
 }

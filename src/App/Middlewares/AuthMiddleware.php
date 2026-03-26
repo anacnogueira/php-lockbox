@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Middlewares;
 
@@ -6,7 +6,7 @@ class AuthMiddleware
 {
     public function handle()
     {
-        if (!auth()) {
+        if (! auth()) {
             redirect('/login');
         }
     }

@@ -1,13 +1,17 @@
 <?php
 
+use Core\Flash;
+use Core\Request;
+use Core\Session;
+
 function base_path($path)
 {
-    return __DIR__ . "/../" . $path;
+    return __DIR__.'/../'.$path;
 }
 
 function redirect($uri)
 {
-    return header('Location: ' . $uri);
+    return header('Location: '.$uri);
 }
 
 function view($view, $data = [], $template = 'app')
@@ -22,7 +26,7 @@ function view($view, $data = [], $template = 'app')
 function dd(...$dump)
 {
     dump($dump);
-    die();
+    exit();
 }
 
 function dump(...$dump)
@@ -36,18 +40,18 @@ function abort($code)
 {
     http_response_code($code);
     view($code);
-    die();
+    exit();
 }
 
 function flash()
 {
-    return new \Core\Flash;
+    return new Flash;
 }
 
 function config($chave = null)
 {
     $config = require base_path('config/config.php');
-    
+
     if (strlen($chave) > 0) {
         $tmp = null;
 
@@ -82,15 +86,14 @@ function old($campo)
     return '';
 }
 
-
 function request()
 {
-    return new Core\Request;
+    return new Request;
 }
 
 function session()
 {
-    return new Core\Session;
+    return new Session;
 }
 
 function encrypt($data)
@@ -98,14 +101,15 @@ function encrypt($data)
     $first_key = base64_decode(config('security.first_key'));
     $second_key = base64_decode(config('security.second_key'));
 
-    $method = "aes-256-cbc";
+    $method = 'aes-256-cbc';
     $iv_length = openssl_cipher_iv_length($method);
     $iv = openssl_random_pseudo_bytes($iv_length);
 
     $first_encrypted = openssl_encrypt($data, $method, $first_key, OPENSSL_RAW_DATA, $iv);
-    $second_encrypted = hash_hmac('sha3-512', $first_encrypted, $second_key, TRUE);
+    $second_encrypted = hash_hmac('sha3-512', $first_encrypted, $second_key, true);
 
-    $output = base64_encode($iv . $second_encrypted . $first_encrypted);
+    $output = base64_encode($iv.$second_encrypted.$first_encrypted);
+
     return $output;
 }
 
@@ -114,12 +118,12 @@ function decrypt($input)
     if (! $input) {
         return false;
     }
-   
+
     $first_key = base64_decode(config('security.first_key'));
     $second_key = base64_decode(config('security.second_key'));
     $mix = base64_decode($input);
 
-    $method = "aes-256-cbc";
+    $method = 'aes-256-cbc';
     $iv_length = openssl_cipher_iv_length($method);
 
     $iv = substr($mix, 0, $iv_length);
@@ -127,16 +131,16 @@ function decrypt($input)
     $first_encrypted = substr($mix, $iv_length + 64);
 
     $data = openssl_decrypt($first_encrypted, $method, $first_key, OPENSSL_RAW_DATA, $iv);
-    $second_encrypted_new = hash_hmac('sha3-512', $first_encrypted, $second_key, TRUE);
+    $second_encrypted_new = hash_hmac('sha3-512', $first_encrypted, $second_key, true);
 
     if (hash_equals($second_encrypted, $second_encrypted_new)) {
         return $data;
-    }    
+    }
 }
 
 function env($key, $default = null)
 {
-    $env = parse_ini_file(base_path(".env"));
+    $env = parse_ini_file(base_path('.env'));
 
     return isset($env[$key]) ? $env[$key] : $default;
 }

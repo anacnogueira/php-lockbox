@@ -8,6 +8,6 @@ class LogoutController
     {
         session_destroy();
 
-        redirect("/login");
+        redirect('/login');
     }
 }

@@ -2,14 +2,14 @@
 
 namespace App\Controllers\Notas;
 
-use Core\Database;
 use App\Models\Nota;
+use Core\Database;
 
 class ExcluirController
 {
     public function __invoke()
-    {        
-        $database = new Database(config('database'));        
+    {
+        $database = new Database(config('database'));
 
         Nota::delete(request()->post('id'));
 

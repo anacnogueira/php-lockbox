@@ -1,4 +1,5 @@
 <?php
+
 namespace Core;
 
 class Flash
@@ -10,15 +11,14 @@ class Flash
 
     public function get($chave)
     {
-        if (!isset($_SESSION["flash_$chave"])) {
-            return false;    
+        if (! isset($_SESSION["flash_$chave"])) {
+            return false;
         }
 
         $valor = $_SESSION["flash_$chave"];
 
         unset($_SESSION["flash_$chave"]);
-    
+
         return $valor;
-    }        
-       
+    }
 }

@@ -18,14 +18,14 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-title">Faça o seu login</div>
-                        <?php if ($mensagem = flash()->get('mensagem')): ?>
+                        <?php if ($mensagem = flash()->get('mensagem')) { ?>
                              <div role="alert" class="alert">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 stroke-current">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                                 <span><?= $mensagem ?></span>
                             </div>
-                        <?php endif; ?>
+                        <?php } ?>
 
                         <label class="form-control">
                             <div class="label">
@@ -36,9 +36,9 @@
                               name="email"
                               class="input w-full max-w-xs bg-yellow-100 border-taupe-700"
                               value="<?= old('email') ?>" />
-                            <?php if (isset($validacoes['email'])): ?>
+                            <?php if (isset($validacoes['email'])) { ?>
                                 <div class="mt-1 text-xs text-error"><?= $validacoes['email'][0] ?></div>
-                            <?php endif; ?>
+                            <?php } ?>
                         </label>
 
                         <label class="form-control">
@@ -46,9 +46,9 @@
                                 <span class="label-text text-black">Senha</span>
                             </div>
                             <input type="password" name="senha" class="input input-bordered w-full max-w-xs bg-yellow-100 border-taupe-700" />
-                             <?php if (isset($validacoes['senha'])): ?>
+                             <?php if (isset($validacoes['senha'])) { ?>
                                 <div class="mt-1 text-xs text-error"><?= $validacoes['senha'][0] ?></div>
-                            <?php endif; ?>
+                            <?php } ?>
                         </label>
 
                         <div class="card-actions">

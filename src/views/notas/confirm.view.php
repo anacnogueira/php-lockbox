@@ -9,9 +9,9 @@
 
             <input type="password" name="senha" class="input input-bordered w-full" />
 
-            <?php if (isset($validacoes['senha'])): ?>
+            <?php if (isset($validacoes['senha'])) { ?>
                 <div class="mt-1 text-xs text-error"><?= $validacoes['senha'][0] ?></div>
-            <?php endif; ?>
+            <?php } ?>
         </label>
 
         <button class="btn btn-primary">Abrir minhas notas</button>

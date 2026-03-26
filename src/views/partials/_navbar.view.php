@@ -4,11 +4,11 @@
     </div>
     <div class="flex-none">
         <ul class="menu menu-horizontal px-1">
-            <?php if (session()->get('show')): ?>
+            <?php if (session()->get('show')) { ?>
                 <li><a href="/esconder"><i class="fa-solid fa-eye-slash"></i></a></li>
-            <?php else: ?>
+            <?php } else { ?>
                  <li><a href="/confirmar"><i class="fa-solid fa-eye"></i></a></li>
-            <?php endif; ?>
+            <?php } ?>
 
             <li>
                 <details>

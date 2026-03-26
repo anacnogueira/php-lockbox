@@ -2,21 +2,19 @@
 
 namespace App\Controllers\Notas;
 
-
 use Core\Validacao;
-
 
 class VisualizarController
 {
-    public function  confirm()
+    public function confirm()
     {
         return view('notas/confirm');
     }
 
     public function show()
-    {       
-         $validacao = Validacao::validar([
-            'senha' => ['required']
+    {
+        $validacao = Validacao::validar([
+            'senha' => ['required'],
 
         ], request()->all());
 
@@ -25,12 +23,12 @@ class VisualizarController
             exit();
         }
 
-        if (!(password_verify(request()->post('senha'), auth()->senha)) ) {
+        if (! (password_verify(request()->post('senha'), auth()->senha))) {
             flash()->push('validacoes', ['senha' => ['Senha incorreta!']]);
 
             return view('notas/confirm');
         }
-    
+
         session()->set('show', true);
 
         return redirect('/notas');

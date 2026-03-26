@@ -7,21 +7,26 @@ use Core\Database;
 class Nota
 {
     public $id;
+
     public $usuario_id;
+
     public $titulo;
+
     public $nota;
+
     public $data_criacao;
+
     public $data_atualizacao;
 
     public static function all($search = null)
     {
         $database = new Database(config('database'));
-        $query = "SELECT * FROM notas WHERE usuario_id = :usuario_id";
+        $query = 'SELECT * FROM notas WHERE usuario_id = :usuario_id';
         $params = ['usuario_id' => auth()->id];
 
         if ($search) {
-            $query .= " AND titulo LIKE :search";
-            $params['search'] = '%' . $search . '%';
+            $query .= ' AND titulo LIKE :search';
+            $params['search'] = '%'.$search.'%';
         }
 
         return $database->query(
@@ -34,10 +39,10 @@ class Nota
     public static function create($data = [])
     {
         $database = new Database(config('database'));
-        $data["now"] = date('Y-m-d H:i:s');
+        $data['now'] = date('Y-m-d H:i:s');
 
         $database->query(
-            query: "INSERT INTO notas (
+            query: 'INSERT INTO notas (
                 usuario_id,
                 titulo,
                 nota, 
@@ -49,13 +54,13 @@ class Nota
                 :nota, 
                 :data_criacao,
                 :data_atualizacao
-            )",
+            )',
             params: [
                 'usuario_id' => auth()->id,
                 'titulo' => $data['titulo'],
-                'nota' =>  trim(encrypt($data['nota'])),
-                'data_criacao' => $data["now"],
-                'data_atualizacao' => $data["now"]
+                'nota' => trim(encrypt($data['nota'])),
+                'data_criacao' => $data['now'],
+                'data_atualizacao' => $data['now'],
             ]
         );
     }
@@ -66,19 +71,19 @@ class Nota
         $now = date('Y-m-d H:i:s');
         $params = [];
 
-        $set = "titulo = :titulo,               
-                data_atualizacao = :data_atualizacao";
+        $set = 'titulo = :titulo,               
+                data_atualizacao = :data_atualizacao';
 
         if ($nota) {
-            $set .= ", nota = :nota";
+            $set .= ', nota = :nota';
             $params['nota'] = trim(encrypt($nota));
         }
 
         $query = "UPDATE notas SET
             $set
             WHERE id = :id AND usuario_id = :usuario_id";
-    
-        $params = array_merge($params,[
+
+        $params = array_merge($params, [
             'id' => $id,
             'titulo' => $titulo,
             'data_atualizacao' => $now,
@@ -96,7 +101,7 @@ class Nota
         $database = new Database(config('database'));
 
         $database->query(
-            query: "DELETE FROM notas WHERE id = :id AND usuario_id = :usuario_id",
+            query: 'DELETE FROM notas WHERE id = :id AND usuario_id = :usuario_id',
             params: [
                 'id' => $id,
                 'usuario_id' => auth()->id,
@@ -106,7 +111,7 @@ class Nota
 
     public function nota()
     {
-        if (session()->get("show")) {
+        if (session()->get('show')) {
             return decrypt($this->nota);
         }
 

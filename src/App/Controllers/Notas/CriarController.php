@@ -2,9 +2,8 @@
 
 namespace App\Controllers\Notas;
 
-use Core\Database;
-use Core\Validacao;
 use App\Models\Nota;
+use Core\Validacao;
 
 class CriarController
 {
@@ -26,10 +25,10 @@ class CriarController
         if ($validacao->naoPassou()) {
             return view('notas/criar');
             exit();
-        }      
+        }
 
         Nota::create($data);
-        
+
         flash()->push('mensagem', 'Nota criada com sucesso! 👍');
 
         redirect('/notas');

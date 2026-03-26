@@ -1,12 +1,12 @@
 <?php $validacoes = flash()->get('validacoes'); ?>
 <div class="bg-base-300 rounded-l-box w-56 flex flex-col divide-y divide-gray-700 overflow-hidden">
-    <?php foreach ($notas as $nota) : ?>
+    <?php foreach ($notas as $nota) { ?>
         <a href="/notas?id=<?= $nota->id ?><?= request()->get('search', '', '&search=') ?>" class="
                 w-full p-2 cursor-pointer hover:bg-base-200 
-                <?php if (isset($nota->id) && $nota->id == $notaSelecionada->id): ?> bg-base-200 <?php endif; ?>">
+                <?php if (isset($nota->id) && $nota->id == $notaSelecionada->id) { ?> bg-base-200 <?php } ?>">
             <?= $nota->titulo ?>
         </a>
-    <?php endforeach; ?>
+    <?php } ?>
 </div>
 
 <div class="bg-base-200 rounded-r-box w-full p-10">
@@ -17,21 +17,21 @@
             <legend class="fieldset-legend">Título</legend>
             <input type="text" name="titulo" class="input w-full" placeholder="Título" value="<?= $notaSelecionada->titulo ?? '' ?>" />
 
-            <?php if (isset($validacoes['titulo'])): ?>
+            <?php if (isset($validacoes['titulo'])) { ?>
                 <div class="mt-1 text-xs text-error"><?= $validacoes['titulo'][0] ?></div>
-            <?php endif; ?>
+            <?php } ?>
         </fieldset>
 
         <fieldset class="fieldset">
             <legend class="fieldset-legend">Sua nota</legend>
             <textarea 
                 name="nota"
-                <?=  !session()->get("show") ? "disabled" : "" ?>
+                <?= ! session()->get('show') ? 'disabled' : '' ?>
                 placeholder="Sua nota"
                 class="textarea h-24 w-full"><?= $notaSelecionada->nota() ?></textarea>
-            <?php if (isset($validacoes['nota'])): ?>
+            <?php if (isset($validacoes['nota'])) { ?>
                 <div class="mt-1 text-xs text-error"><?= $validacoes['nota'][0] ?></div>
-            <?php endif; ?>
+            <?php } ?>
         </fieldset>
     </form>
 
